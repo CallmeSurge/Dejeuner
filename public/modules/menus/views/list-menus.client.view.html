@@ -1,0 +1,19 @@
+<section data-ng-controller="MenusController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Menus</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="menu in menus" data-ng-href="#!/menus/{{menu._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="menu.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="menu.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="menu.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!menus.$resolved || menus.length">
+    	No Menus yet, why don't you <a href="/#!/menus/create">create one</a>?
+    </div>
+</section>
