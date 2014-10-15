@@ -15,10 +15,8 @@ var MenuSchema = new Schema({
 		ref: 'FoodItem'
 
 	}],
-		
 	date: {
 		type: Date,
-		required: 'Date can not be Empty',
 		default: Date.now
 	}
 

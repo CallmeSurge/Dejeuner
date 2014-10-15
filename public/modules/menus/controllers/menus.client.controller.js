@@ -1,15 +1,19 @@
 'use strict';
 
 // Menus controller
-angular.module('menus').controller('MenusController', ['$scope', '$stateParams', '$location', 'Authentication', 'MenuService',
-	function($scope, $stateParams, $location, Authentication, MenuService ) {
+angular.module('menus').controller('MenusController', ['$scope', '$stateParams', '$location', 'Authentication', 'MenuService', 'Fooditems',
+	function($scope, $stateParams, $location, Authentication, MenuService, Fooditems ) {
 		$scope.authentication = Authentication;
-
+		$scope.items = [];
 		// Create new Menu
 		$scope.create = function() {
 			// Create new Menu object
+			var ids = _.map($scope.items, function(obj){
+					return obj._id;
+				});
 			var menu = new MenuService ({
-				name: this.name
+				items: ids
+
 			});
 
 			// Redirect after save
@@ -22,7 +26,6 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 				$scope.error = errorResponse.data.message;
 			});
 		};
-
 		// Remove existing Menu
 		$scope.remove = function( menu ) {
 			if ( menu ) { menu.$remove();
@@ -38,21 +41,46 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 				});
 			}
 		};
+		$scope.checkIndex = function($event, fooditem){ 
+			if ($event.target.checked) { 
+				$scope.items.push(fooditem);
+			} else {
+				var index = $scope.items.indexOf(fooditem);
+				$scope.items.splice(index, 1);
+			}
+		};
 
 		// Update existing Menu
-		$scope.update = function() {
-			var menu = $scope.menu ;
-
-			menu.$update(function() {
-				$location.path('menus/' + menu._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
+		$scope.isSelected = function($event, index){
+			var itemIds = _.map($scope.menu.items, function(item){
+				return item._id;
 			});
+			var itemIsSelected = itemIds.indexOf($scope.fooditems[parseInt(index)]._id) > -1;
+				return itemIsSelected;
+
+		};
+
+		$scope.update = function() {	
+
+				var menu = $scope.menu ;
+
+				menu.$update(function() {
+					$location.path('menus/' + menu._id);
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
+			// };
 		};
 
 		// Find a list of Menus
 		$scope.find = function() {
 			$scope.menus = MenuService.query();
+			console.log($scope.menus);
+		};
+
+		// Get all of Fooditems
+		$scope.getFoodItems = function() {
+			$scope.fooditems = Fooditems.query();
 		};
 
 		// Find existing Menu

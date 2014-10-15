@@ -10,7 +10,7 @@ module.exports = function(app) {
 	// Article Routes
 	app.route('/menus')
 		.get(menus.list)
-		.post(users.requiresLogin, users.adminOnly, menus.create);
+		.post(users.adminOnly, menus.create);
 
 	app.route('/menus/:menuId')
 		.get(menus.read)

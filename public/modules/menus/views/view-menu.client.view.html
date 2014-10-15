@@ -1,8 +1,15 @@
 <section data-ng-controller="MenusController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="menu.name"></h1>
+		<h1 data-ng-bind="menu.date | date: 'medium'"></h1>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == menu.user._id">
+		<h2>Menu for <span data-ng-bind="menu.date | date: 'EEE'"></span></h2>
+		<div data-ng-repeat="item in menu.items">
+			<h3 data-ng-bind="item.name"></h3>
+			<input type="number" min= "1" max= "5">
+			<h4 data-ng-bind="item.price"></h4>
+		</div>
+		<input type="submit" class="btn btn-default pull-right" data-ng-href="" value="Create Order">
+	<div class="pull-right">
 		<a class="btn btn-primary" href="/#!/menus/{{menu._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
@@ -10,12 +17,4 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="menu.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="menu.user.displayName"></span>
-		</em>
-	</small>
 </section>
