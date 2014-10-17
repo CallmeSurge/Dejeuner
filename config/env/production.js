@@ -17,7 +17,10 @@ module.exports = {
 				'public/lib/angular-sanitize/angular-sanitize.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
+				'public/lib/underscore/underscore-min.js',
+				'public/lib/moment/min/moment.min.js',
+				'public/lib/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js'
 			]
 		},
 		css: 'public/dist/application.min.css',

@@ -9,9 +9,10 @@
 				    <span data-ng-bind="order.user.displayName"></span>
                 </strong>
                     <!-- <span data-ng-bind="order.items"></span> -->
-                <div ng-repeat="item in order.items">
+                <div ng-repeat="item in order.items" data-ng-init=>
                     <span data-ng-bind = "item.item.name"></span>
                     <span data-ng-bind = "item.item.price * item.quantity"></span>
+                    <span>
                 </div>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="order.name"></h4>
