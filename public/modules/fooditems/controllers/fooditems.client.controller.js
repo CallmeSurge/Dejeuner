@@ -15,8 +15,8 @@ angular.module('fooditems').controller('FooditemsController', ['$scope', '$state
 
 			// Redirect after save
 			fooditem.$save(function(response) {
+				$scope.show_item_success = true;
 				$scope.find();
-				$location.path('fooditems/create');
 
 				// Clear form fields
 				$scope.name = '';
@@ -37,17 +37,25 @@ angular.module('fooditems').controller('FooditemsController', ['$scope', '$state
 				}
 			} else {
 				$scope.fooditem.$remove(function() {
-					$location.path('fooditems/create');
+					$location.path('/#!/');
 				});
 			}
 		};
 
 		// Update existing Fooditem
-		$scope.update = function() {
-			var fooditem = $scope.fooditem ;
 
+		$scope.selectForUpdate = function(index){
+			$scope.name = $scope.fooditems[index].name;
+			$scope.price = $scope.fooditems[index].price;
+			$scope.update_index = index;
+		};
+
+		$scope.update = function() {
+			$scope.fooditems[$scope.update_index].name = this.name;
+			$scope.fooditems[$scope.update_index].price = this.price;
+			var fooditem = $scope.fooditems[$scope.update_index];
 			fooditem.$update(function() {
-				$location.path('fooditems/create');
+				$location.path('/#!/');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

@@ -70,7 +70,7 @@ exports.delete = function(req, res) {
 /**
  * List of Menus
  */
-exports.list = function(req, res) { Menu.find().sort('-created').populate('items', 'name').exec(function(err, menus) {
+exports.list = function(req, res) { Menu.find().sort('-created').populate('items').exec(function(err, menus) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -84,7 +84,7 @@ exports.list = function(req, res) { Menu.find().sort('-created').populate('items
 /**
  * Menu middleware
  */
-exports.menuByID = function(req, res, next, id) { Menu.findById(id).populate('items', 'name').exec(function(err, menu) {
+exports.menuByID = function(req, res, next, id) { Menu.findById(id).populate('items').exec(function(err, menu) {
 		if (err) return next(err);
 		if (! menu) return next(new Error('Failed to load Menu ' + id));
 		req.menu = menu ;

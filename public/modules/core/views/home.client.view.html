@@ -1,5 +1,58 @@
-<section data-ng-controller="HomeController">
-	<div class="jumbotron text-center">
+<div class="home" data-ng-controller="HomeController" data-ng-hide="authentication.user">
+	<!-- <h1 class="pushDown">Dejenuer</h1> -->
+	<!-- <img  src = "modules/core/img/brand/home.jpg"> -->
+</div>
+
+
+
+<section class="home" data-ng-controller="HomeController" data-ng-show="authentication.user">
+	<div class="row" data-ng-show="authentication.user.roles === 'admin'">
+		<div>
+			<h4>Welcome, Mr. .</h4>
+			<ul class="navigate">
+				<li ng-class="{active:page.isSelected(1)}">
+					<a ng-click="selectTab(1)" class="btn btn-primary btn-lg">View Food Items</a>
+				</li>
+				<li ng-class="{active:page.isSelected(2)}">
+					<a ng-click="selectTab(2)" class="btn btn-primary btn-lg">Create Menu</a>
+				</li>
+				<li ng-class="{active:page.isSelected(3)}">
+					<a ng-click="selectTab(3)" class="btn btn-primary btn-lg">View Menus</a>
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<div ng-show="isSelected() === 1" ng-include="'modules/fooditems/views/create-fooditem.client.view.html'"></div>
+			<div ng-show="isSelected() === 2" ng-include="'modules/menus/views/create-menu.client.view.html'"></div>
+			<div ng-show="isSelected() === 3" ng-include="'modules/menus/views/list-menus.client.view.html'"></div>
+		</div>
+	</div>
+</section>
+
+
+<section data-ng-controller="HomeController" data-ng-show="authentication.user">
+	<div class="row"  data-ng-show="authentication.user.roles === 'user'">
+		<div>
+			<h4>Welcome User</h4>
+			<ul class="navigate">
+				<li ng-class="{active:page.isSelected(1)}">
+					<a ng-click="selectTab(1)" class="btn btn-primary btn-lg">Create Order</a>
+				</li>
+				<!-- <li ng-class="{active:page.isSelected(2)}">
+					<a ng-click="selectTab(2)" class="btn btn-primary btn-lg">View Previous Orders</a>
+				</li> -->
+			</ul>
+		</div>
+		<div>
+			<div ng-show="isSelected() === 1" ng-include="'modules/orders/views/create-order.client.view.html'"></div>
+			<!-- <div ng-show="isSelected() === 2" ng-include="''"></div> -->
+		</div>
+	<div>
+</section>
+
+
+	<!-- <div class="jumbotron text-center">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
 				<img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/logo.png" />
@@ -90,5 +143,4 @@
 		</p>
 	</div>
 	<br>Enjoy &amp; Keep Us Updated,
-	<br>The MEAN.JS Team.
-</section>
+	<br>The MEAN.JS Team. -->

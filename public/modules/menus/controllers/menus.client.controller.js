@@ -18,7 +18,8 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 
 			// Redirect after save
 			menu.$save(function(response) {
-				$location.path('menus/' + response._id);
+				// $location.path('menus/' + response._id);
+				$scope.show_menu_success = true;
 
 				// Clear form fields
 				$scope.name = '';
@@ -72,10 +73,13 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 			// };
 		};
 
+		$scope.viewOrders = function(menuId){
+			$location.path('menus/' + menuId + '/orders');
+		};
+
 		// Find a list of Menus
 		$scope.find = function() {
 			$scope.menus = MenuService.query();
-			console.log($scope.menus);
 		};
 
 		// Get all of Fooditems
@@ -88,6 +92,8 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 			$scope.menu = MenuService.get({ 
 				menuId: $stateParams.menuId
 			});
+			console.log($scope.menu);
 		};
+
 	}
 ]);

@@ -9,11 +9,11 @@ var users = require('../../app/controllers/users'),
 module.exports = function(app) {
 	// Article Routes
 	app.route('/foodItems')
-		.get(users.adminOnly, foodItems.list)
-		.post(users.requiresLogin, users.adminOnly, foodItems.create);
+		.get(foodItems.list)
+		.post(users.requiresLogin, foodItems.create);
 
 	app.route('/foodItems/:foodItemId')
-		.get(users.adminOnly, foodItems.read)
+		.get(foodItems.read)
 		.put(users.requiresLogin, foodItems.update)
 		.delete(users.requiresLogin, foodItems.delete);
 

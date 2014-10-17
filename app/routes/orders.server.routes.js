@@ -18,6 +18,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, orders.update)
 		.delete(users.requiresLogin, orders.delete);
 
+	app.route('/menus/orders/:orderId')
+		.get(orders.read);
+
 	app.param('menuId', menus.menuByID);
 	// Finish by binding the article middleware
 	app.param('orderId', orders.orderByID);

@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Order = mongoose.model('Order'),
+	FoodItem = mongoose.model('FoodItem'),
 	_ = require('lodash');
 
 /**
@@ -74,13 +75,13 @@ exports.delete = function(req, res) {
  * List of menus
  */
 exports.list = function(req, res, id) {
-	Order.find().where('menu').in([req.menu._id]).sort('-created').populate('items.item').populate('menu', 'date').populate('user', 'displayName').exec(function(err, orders) {
+	Order.find().where('menu').in([req.menu._id]).sort('-created').populate('order').populate('items.item').populate('user', 'displayName').exec(function(err, orders) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(orders);
+               res.jsonp(orders);
 		}
 	});
 };
@@ -90,7 +91,7 @@ exports.list = function(req, res, id) {
  * Menu middleware
  */
 exports.orderByID = function(req, res, next, id) {
-	Order.findById(id).populate('items').exec(function(err, order) {
+	Order.findById(id).populate('items.item').exec(function(err, order) {
 		if (err) return next(err);
 		if (!order) return next(new Error('Failed to load order ' + id));
 		next();

@@ -1,15 +1,15 @@
-<section data-ng-controller="MenusController" data-ng-init="findOne()">
+<section class="home" data-ng-controller="MenusController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="menu.date | date: 'medium'"></h1>
 	</div>
-		<h2>Menu for <span data-ng-bind="menu.date | date: 'EEE'"></span></h2>
-		<div data-ng-repeat="item in menu.items">
-			<h3 data-ng-bind="item.name"></h3>
-			<input type="number" min= "1" max= "5">
-			<h4 data-ng-bind="item.price"></h4>
-		</div>
-		<input type="submit" class="btn btn-default pull-right" data-ng-href="" value="Create Order">
-	<div class="pull-right">
+	<h2>Menu for <span data-ng-bind="menu.date | date: 'EEE'"></span></h2>
+    <div class="list-group col-xs-8 col-md-5 foodItem">
+        <ul data-ng-repeat="item in menu.items" class="list-group-item navigate">
+            <li class="list-group-item-heading" data-ng-bind="item.name"></li>
+            <li class="list-group-item-heading price" data-ng-bind="item.price"></li>  
+        </ul>
+    </div>
+	<div class="pull-right" data-ng-hide="authentication.user.roles === 'user'">
 		<a class="btn btn-primary" href="/#!/menus/{{menu._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
@@ -17,4 +17,5 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
+	<a ng-click="viewOrders(menu._id)" class="btn btn-primary btn-lg">View Orders</a>
 </section>

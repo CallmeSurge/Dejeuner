@@ -37,7 +37,7 @@ angular.module('core').service('Menus', [
 				if (this.menus[menuId]) {
 					return true;
 				} else {
-					throw new Error('Menu does not exists');
+					throw new Error('Menu does not existslol');
 				}
 			} else {
 				throw new Error('MenuId was not provided');

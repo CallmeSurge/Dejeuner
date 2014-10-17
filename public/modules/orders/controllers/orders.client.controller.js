@@ -1,23 +1,25 @@
 'use strict';
 
 // Orders controller
-angular.module('orders').controller('OrdersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Orders',
-	function($scope, $stateParams, $location, Authentication, Orders ) {
+angular.module('orders').controller('OrdersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Orders', 'AllOrders' ,'MenuService',
+	function($scope, $stateParams, $location, Authentication, Orders, AllOrders, MenuService) {
 		$scope.authentication = Authentication;
+		$scope.myOrder = [];
+		$scope.backendOrders = [];
+		$scope.orderItems = [];
 
 		// Create new Order
 		$scope.create = function() {
 			// Create new Order object
 			var order = new Orders ({
-				name: this.name
+				items : $scope.backendOrders
 			});
-
+		
 			// Redirect after save
-			order.$save(function(response) {
-				$location.path('orders/' + response._id);
+			order.$save({menuId: $scope.menu._id}, function(response) {	
+				$scope.show_order_success = true;
 
 				// Clear form fields
-				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -33,9 +35,18 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 					}
 				}
 			} else {
-				$scope.order.$remove(function() {
+				$scope.order.$remove({menuId: $scope.menu._id}, function() {
 					$location.path('orders');
 				});
+			}
+		};
+		$scope.checkedIndex = function($event, fooditem){ 
+			if ($event.target.checked) { 
+				$scope.myOrder.push(fooditem);
+				$scope.backendOrders.push({item: fooditem._id, quantity: fooditem.quantity});
+			} else {
+				var index = $scope.myOrder.indexOf(fooditem);
+				$scope.myOrder.splice(index, 1);
 			}
 		};
 
@@ -43,23 +54,40 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 		$scope.update = function() {
 			var order = $scope.order ;
 
-			order.$update(function() {
+			order.$update({menuId: $scope.menu._id}, function() {
 				$location.path('orders/' + order._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
+		$scope.findCurrentMenu = function() {
+			var now = moment();
+			var menus = MenuService.query(function(menus){
+				for(var index = 0; index < menus.length; index++){
+					var date = moment(menus[index].date);
+					if(now.isSame(date, 'day')){
+						$scope.menu = menus[index];
+						break;
+					}
+				}
+			});
+		};
+
 		// Find a list of Orders
 		$scope.find = function() {
-			$scope.orders = Orders.query();
+			$scope.orders = AllOrders.query();
 		};
 
 		// Find existing Order
 		$scope.findOne = function() {
-			$scope.order = Orders.get({ 
+			$scope.order = AllOrders.get({ 
 				orderId: $stateParams.orderId
 			});
+		};
+
+		$scope.findByMenu = function() {
+			$scope.orders = Orders.query({menuId: $stateParams.menuId});
 		};
 	}
 ]);

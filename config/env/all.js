@@ -27,7 +27,8 @@ module.exports = {
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/underscore/underscore-min.js',
-				'public/lib/moment/min/moment.js'
+				'public/lib/moment/min/moment.min.js',
+				'public/lib/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js'
 			]
 		},
 		css: [

@@ -13,3 +13,88 @@
 .ng-valid.ng-dirty{
     border-color:#78FA89;
 }
+.navigate ul {
+	list-style: none;
+}
+.navigate li {
+	display: inline-block;
+	padding: 20px 20px;
+}
+.price {
+	font-weight: bolder;
+	margin-left: 10px;
+}
+.icons {
+	margin-left: 30px;
+}
+.icons a:hover {
+	text-decoration: none;
+}
+.delete:hover {
+	color: red;
+}
+.edit:hover {
+	color: green;
+}
+.quantityField {
+	width: 30px;
+	margin-right: 5px;
+}
+.home {
+	margin-top: 100px;
+	background: url('../img/brand/home.jpg');
+	background-size: 100%;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0 0 5px rgb(0,0,0);
+	padding: 50px 50px;
+}
+.topbar {
+	height: 100px;
+	width:100%;
+	background-color: #81F7F3;
+	color: #000;
+}
+.titleText {
+	font-family: 'Leckerli One', cursive;
+	font-size: 30px;
+	margin-top: 20px;
+	margin-right: 80px;
+	color: #000;
+}
+.titleText:hover,
+.titleText li a:hover {
+	text-decoration: none;
+	color: #000;
+
+}
+.d {
+	font-size: 50px
+}
+.logo {
+	width: 80px;
+	height: 60px;
+	margin-top: -20px;
+}
+.titleText li {
+	display: inline-block;
+	list-style: none;
+}
+.titleText li a {
+	font-size: 15px;
+	color: darkblue;
+}
+.pushDown {
+	margin-bottom: 100px;
+}
+
+.btn-primary {
+
+}
+.list-group-item {
+	padding: 3px 5px;
+	background-color: #FBF2EF;
+}
+.done {
+	background-color: #CEF6D8;
+}

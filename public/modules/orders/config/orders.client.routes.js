@@ -6,7 +6,7 @@ angular.module('orders').config(['$stateProvider',
 		// Orders state routing
 		$stateProvider.
 		state('listOrders', {
-			url: '/orders',
+			url: '/menus/:menuId/orders',
 			templateUrl: 'modules/orders/views/list-orders.client.view.html'
 		}).
 		state('createOrder', {
