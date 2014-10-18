@@ -607,6 +607,9 @@ angular.module('orders').controller('OrdersController', [
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
+      console.log($scope.backendOrders);  // for (var i in $scope.backendOrders) {
+                                          // 	$scope.backendOrders.
+                                          // }
     };
     // Remove existing Order
     $scope.remove = function (order) {
@@ -633,6 +636,7 @@ angular.module('orders').controller('OrdersController', [
       } else {
         var index = $scope.myOrder.indexOf(fooditem);
         $scope.myOrder.splice(index, 1);
+        $scope.backendOrders.splice(index, 1);
       }
     };
     // Update existing Order

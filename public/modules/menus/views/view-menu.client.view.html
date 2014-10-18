@@ -1,8 +1,8 @@
-<section class="home" data-ng-controller="MenusController" data-ng-init="findOne()">
+<section class= "home" data-ng-controller="MenusController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="menu.date | date: 'medium'"></h1>
+		<h4 data-ng-bind="menu.date | date: 'medium'"></h4>
 	</div>
-	<h2>Menu for <span data-ng-bind="menu.date | date: 'EEE'"></span></h2>
+	<h4>Menu for <span data-ng-bind="menu.date | date: 'EEE'"></span></h4>
     <div class="list-group col-xs-8 col-md-5 foodItem">
         <ul data-ng-repeat="item in menu.items" class="list-group-item navigate">
             <li class="list-group-item-heading" data-ng-bind="item.name"></li>
@@ -10,9 +10,9 @@
         </ul>
     </div>
 	<div class="pull-right" data-ng-hide="authentication.user.roles === 'user'">
-		<a class="btn btn-primary" href="/#!/menus/{{menu._id}}/edit">
+		<!-- <a class="btn btn-primary" href="/#!/menus/{{menu._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
-		</a>
+		</a> -->
 		<a class="btn btn-primary" data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>

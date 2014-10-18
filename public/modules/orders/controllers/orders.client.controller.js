@@ -23,6 +23,10 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+				console.log($scope.backendOrders);
+			// for (var i in $scope.backendOrders) {
+			// 	$scope.backendOrders.
+			// }
 		};
 
 		// Remove existing Order
@@ -47,6 +51,7 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 			} else {
 				var index = $scope.myOrder.indexOf(fooditem);
 				$scope.myOrder.splice(index, 1);
+				$scope.backendOrders.splice(index, 1);
 			}
 		};
 
