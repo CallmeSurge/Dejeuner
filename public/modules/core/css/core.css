@@ -34,26 +34,20 @@
 .icons a:hover {
 	text-decoration: none;
 }
-.delete:hover {
-	color: red;
-	text-decoration: none;
-}
-.edit:hover {
-	color: green;
-	text-decoration: none;
-}
+
 .quantityField {
 	width: 30px;
 	margin-right: 5px;
 }
 body {
-	background: url('../img/brand/others.jpg');
+	background: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('/modules/core/img/brand/others.jpg') no-repeat;
 	background-attachment: fixed;
 	width: 100%;
 }
+
 .home {
 	margin-top: 80px;
-	background: url('../img/brand/home.jpg');
+	background: url('/modules/core/img/brand/home.jpg') no-repeat;
 	background-attachment: fixed;
 	background-size: 100%;
 	width: 100%;
@@ -62,9 +56,18 @@ body {
 	box-shadow: 0 0 5px rgb(0,0,0);
 	padding: 50px 50px;
 }
+.space {
+	margin-top: 80px;
+	position: relative;
+	top: 200px;
+	left: 100px;
+}
+.huge {
+	font-size: 80px;
+}
 .signIn {
 	margin-top: 80px;
-	background: url('../img/brand/home.jpg');
+	background: url('/modules/core/img/brand/home.jpg') no-repeat;
 	background-attachment: fixed;
 	background-size: 100%;
 	width: 100%;
@@ -75,14 +78,19 @@ body {
 	height: 100px;
 	width:100%;
 	color: #000;
-	border-bottom: none;
 
-background: -webkit-gradient(linear, left top, left bottom, 
+	background: -webkit-gradient(linear, left top, left bottom, 
 	color-stop(1%, rgba(0,128,128,1)), 
 	color-stop(17%, rgba(26,150,146,1)), 
 	color-stop(79%, rgba(128,240,219,1)), 
 	color-stop(89%, rgba(145,255,231,1)));
 }
+
+.navbar {
+	background: rgba(145,255,231,1);
+
+}
+
 .titleText {
 	font-family: 'Leckerli One', cursive;
 	font-size: 30px;
@@ -100,21 +108,45 @@ background: -webkit-gradient(linear, left top, left bottom,
 	font-size: 50px
 }
 .logo {
-	width: 80px;
-	height: 60px;
-	margin-top: -20px;
+	margin-top: 10px;
+	margin-left: 20px;
+	width: 250px;
 }
 .titleText li {
 	display: inline-block;
 	list-style: none;
 }
 .titleText li a {
-	font-size: 15px;
-	color: darkblue;
+	font-size: 14px;
+	color: #000;
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(9%, rgba(237,255,251,1)), 
+		color-stop(13%, rgba(237,255,251,1)), 
+		color-stop(49%, rgba(201,255,235,1)), 
+		color-stop(58%, rgba(201,255,235,1)));
 }
+.titleText li a:hover {
+	color: #000;
+}
+a {
+	color: #00cc99;
+}
+a:hover {
+	text-decoration: none;
 
+}
 .btn-primary {
-
+	color: #000;
+	border: 1px solid #CCC;
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(9%, rgba(237,255,251,1)), 
+		color-stop(13%, rgba(237,255,251,1)), 
+		color-stop(49%, rgba(201,255,235,1)), 
+		color-stop(58%, rgba(201,255,235,1)));
+}
+.btn-primary:hover {
+	color: #000;
+	border: 1px solid #ccc;
 }
 .list-group-item {
 	padding: 3px 5px;
@@ -124,7 +156,21 @@ background: -webkit-gradient(linear, left top, left bottom,
 		color-stop(49%, rgba(201,255,235,1)), 
 		color-stop(58%, rgba(201,255,235,1)));
 }
-.done {
-	
-background: -webkit-gradient(linear, left top, left bottom, color-stop(9%, rgba(243,194,255,1)), color-stop(13%, rgba(243,194,255,1)), color-stop(71%, rgba(250,231,255,1)), color-stop(92%, rgba(253,245,255,1)));
+.done, .delete {
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(9%, rgba(243,194,255,1)), 
+		color-stop(13%, rgba(243,194,255,1)), 
+		color-stop(71%, rgba(250,231,255,1)), 
+		color-stop(92%, rgba(253,245,255,1)));
 }
+.delete:hover {
+	border: 1px solid rgb(250,231,255);
+}
+
+.order {
+	background-image: -webkit-gradient(linear, left top, left bottom,
+		color-stop(0, #3eb411),
+		color-stop(0.47, #96d82b)
+		);
+}
+

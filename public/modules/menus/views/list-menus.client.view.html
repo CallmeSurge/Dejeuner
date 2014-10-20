@@ -1,16 +1,16 @@
 <section data-ng-controller="MenusController" data-ng-init="find()">
     <div class="page-header">
-        <h3>Menus</h3>
+        <h4>List of Menus</h4>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="menu in menus" data-ng-href="#!/menus/{{menu._id}}" class="list-group-item">
-			<small class="list-group-item-text">
+    <div>
+        <a data-ng-repeat="menu in menus" data-ng-href="#!/menus/{{menu._id}}" class="list-group-item btn btn-primary done">
+			<p>
 				Menu for
 				<span data-ng-bind="menu.date | date:'EEE'"></span>
-			</small>
+			</p>
         </a>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!menus.$resolved || menus.length">
+    <div class="alert alert-warning text-center done" data-ng-hide="!menus.$resolved || menus.length">
     	No Menus yet
     </div>
 </section>

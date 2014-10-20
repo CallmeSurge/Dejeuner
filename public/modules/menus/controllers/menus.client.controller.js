@@ -38,7 +38,7 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 				}
 			} else {
 				$scope.menu.$remove(function() {
-					$location.path('menus');
+					// $location.path('menus');
 				});
 			}
 		};

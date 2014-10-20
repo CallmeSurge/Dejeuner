@@ -70,7 +70,7 @@ var UserSchema = new Schema({
 	additionalProvidersData: {},
 	roles: {
 		type: String,
-		default: ['user']
+		default: ['admin']
 	},
 	updated: {
 		type: Date

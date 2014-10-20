@@ -1,13 +1,14 @@
-<div data-ng-controller="HomeController" data-ng-hide="authentication.user">
-	<!-- <h1 class="pushDown">Dejenuer</h1> -->
-	<!-- <img  src = "modules/core/img/brand/home.jpg"> -->
+<div class="space" data-ng-controller="HomeController" data-ng-hide="authentication.user">
+		<h2 class="huge">Hungry?</h2>
+		<h3>There is a huge connection between your stomach and the brain...</h3>
+		<h4>Click here to<a href="/#!/signin"> Send Your Order</a></h4>
 </div>
 
 
 
 <section data-ng-controller="HomeController" data-ng-hide="authentication.user.roles !== 'admin'">
 	<div class="row home">
-		<div>
+		<div class="navbar">
 			<ul class="navigate">
 				<li ng-class="{active:page.isSelected(1)}">
 					<a ng-click="selectTab(1)" class="">View Food Items</a>

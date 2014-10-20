@@ -2,23 +2,18 @@
     <div class="page-header">
         <h4>Today's Orders{{menu.date}}</h4>
     </div>
-    <div class="list-group">
-        <div data-ng-repeat="order in orders" class="list-group-item">
-			<small class="list-group-item-text">
-                <strong>
+        <ul data-ng-repeat="order in orders" class="list-group-item navigate">
+                <li><strong>
 				    <span data-ng-bind="order.user.displayName"></span>
-                </strong>
+                </strong></li>
                     <!-- <span data-ng-bind="order.items"></span> -->
-                <div ng-repeat="item in order.items" data-ng-init=>
+                <li ng-repeat="item in order.items">
                     <span data-ng-bind = "item.item.name"></span>
-                    <span data-ng-bind = "item.item.price * item.quantity"></span>
-                    <span>
-                </div>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="order.name"></h4>
-        </div>
-    </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!orders.$resolved || orders.length">
+                    <strong><span data-ng-bind = "item.item.price * item.quantity"></span></strong>
+                </li>
+        </ul>
+
+    <div class="alert alert-warning text-center done" data-ng-hide="!orders.$resolved || orders.length">
     	No Orders yet
     </div>
 </section>
