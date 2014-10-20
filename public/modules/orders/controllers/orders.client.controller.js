@@ -7,6 +7,7 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 		$scope.myOrder = [];
 		$scope.backendOrders = [];
 		$scope.orderItems = [];
+		$scope.total = 0;
 
 		// Create new Order
 		$scope.create = function() {
@@ -23,10 +24,7 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-				console.log($scope.backendOrders);
-			// for (var i in $scope.backendOrders) {
-			// 	$scope.backendOrders.
-			// }
+
 		};
 
 		// Remove existing Order
@@ -48,10 +46,12 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 			if ($event.target.checked) { 
 				$scope.myOrder.push(fooditem);
 				$scope.backendOrders.push({item: fooditem._id, quantity: fooditem.quantity});
+				$scope.total = $scope.total + (fooditem.quantity * fooditem.price);
 			} else {
 				var index = $scope.myOrder.indexOf(fooditem);
 				$scope.myOrder.splice(index, 1);
 				$scope.backendOrders.splice(index, 1);
+				$scope.total = $scope.total - (fooditem.quantity * fooditem.price);
 			}
 		};
 

@@ -18,8 +18,9 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 
 			// Redirect after save
 			menu.$save(function(response) {
-				// $location.path('menus/' + response._id);
 				$scope.show_menu_success = true;
+				$scope.updateFoodItem();
+
 
 				// Clear form fields
 				$scope.name = '';
@@ -38,7 +39,7 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 				}
 			} else {
 				$scope.menu.$remove(function() {
-					// $location.path('menus');
+					$location.path('/#!/');
 				});
 			}
 		};
@@ -77,6 +78,10 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 			$location.path('menus/' + menuId + '/orders');
 		};
 
+		$scope.updateFoodItem = function(){
+			$scope.fooditems = Fooditems.query();
+		};
+
 		// Find a list of Menus
 		$scope.find = function() {
 			$scope.menus = MenuService.query();
@@ -92,7 +97,6 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 			$scope.menu = MenuService.get({ 
 				menuId: $stateParams.menuId
 			});
-			console.log($scope.menu);
 		};
 
 	}

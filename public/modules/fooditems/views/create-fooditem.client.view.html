@@ -1,14 +1,8 @@
 <section data-ng-controller="FooditemsController" data-ng-show="authentication.user.roles === 'admin'">
-    <div class="page-header">
-        <h4>New Food Item</h4>
-    </div>
-    <div data-ng-show="show_item_success" class="text-danger">
-        <p>Food Item created!</p>
-    </div>
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
-            <fieldset>
-                
+        <h4>New Food Item</h4>
+        <form data-ng-submit="create()" novalidate>
+            <fieldset> 
                 <div class="form-group list-group">
                         <ul class="navigate">
                             <li><input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required></li>
@@ -16,13 +10,12 @@
                             <li><input type="submit" class="btn btn-primary order" value="Add Food Item"></li>
                             <li><input type='button' class='btn btn-primary' value='Update Item' ng-click='update();'>
                         </ul>
-                </div>       
-				<div data-ng-show="error" class="text-danger list-group">
-					<p data-ng-bind="error"></p>
-				</div>
+                </div>
+                <p data-ng-show="show_item_success" class="text-danger">Food Item created!</p>       
+				<p data-ng-show="error" class="text-danger list-group" data-ng-bind="error"></p>
             </fieldset>
         </form>
-        <section data-ng-init= "find()">
+        <div data-ng-init= "find()">
             <div class="page-header">
                 <h4>List of Food Items</h4>
             </div>
@@ -39,6 +32,6 @@
             <div class="alert alert-warning text-center done" data-ng-hide="!fooditems.$resolved || fooditems.length">
                 No Fooditems yet
             </div>
-        </section>
+        </div>
     </div>
 </section>

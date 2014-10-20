@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-	function($scope, Authentication) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Fooditems',
+	function($scope, Authentication, Fooditems) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 
@@ -10,9 +10,13 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 
 		$scope.selectTab =function(setTab){
 			$scope.tab = setTab;
+			$scope.fetchFooditems();
 		};
 		$scope.isSelected = function(){
 			return $scope.tab;
+		};
+		$scope.fetchFooditems = function() {
+			$scope.fooditems = Fooditems.query();
 		};
 
 	}

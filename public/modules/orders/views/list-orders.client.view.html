@@ -8,11 +8,10 @@
                 </strong></li>
                     <!-- <span data-ng-bind="order.items"></span> -->
                 <li ng-repeat="item in order.items">
-                    <span data-ng-bind = "item.item.name"></span>
+                    <span data-ng-bind = "item.item.name" ng-init=""></span>
                     <strong><span data-ng-bind = "item.item.price * item.quantity"></span></strong>
                 </li>
         </ul>
-
     <div class="alert alert-warning text-center done" data-ng-hide="!orders.$resolved || orders.length">
     	No Orders yet
     </div>

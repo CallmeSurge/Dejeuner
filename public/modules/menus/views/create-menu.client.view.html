@@ -7,13 +7,16 @@
 
     <form class="form-horizontal" data-ng-submit="create()" novalidate>
 
-            <div data-ng-controller="FooditemsController" data-ng-init="find()">
+            <div data-ng-controller="FooditemsController">
                 <div class="list-group col-xs-8 col-md-5 foodItem">
                     <ul data-ng-repeat="fooditem in fooditems track by $index" class="list-group-item navigate">
                         <li class="list-group-item-heading" data-ng-bind="fooditem.name"></li>
                         <li style="float:right;"><input type="checkbox" ng-click= "checkIndex($event, fooditem)" /></li>
                         <li class="list-group-item-heading price" data-ng-bind="fooditem.price"></li>   
                     </ul>
+                    <div class="alert alert-warning text-center done" data-ng-hide="!fooditems.$resolved || fooditems.length">
+                        No Fooditems yet
+                    </div>
                 </div>
                 <div class="list-group col-xs-8 col-md-5 createMenu">
                     <ul data-ng-repeat="fooditem in items track by $index" class="list-group-item navigate done">
@@ -31,6 +34,7 @@
                     <strong data-ng-bind="error"></strong>
                 </div>
             </div>
+
             
     </form>
 </section>

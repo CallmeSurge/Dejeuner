@@ -16,7 +16,7 @@ angular.module('fooditems').controller('FooditemsController', ['$scope', '$state
 			// Redirect after save
 			fooditem.$save(function(response) {
 				$scope.show_item_success = true;
-				$scope.find();
+				$scope.fooditems = Fooditems.query();
 
 				// Clear form fields
 				$scope.name = '';

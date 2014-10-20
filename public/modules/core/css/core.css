@@ -173,4 +173,7 @@ a:hover {
 		color-stop(0.47, #96d82b)
 		);
 }
+.navbar ul li a {
+	color: #000;
+} 
 
