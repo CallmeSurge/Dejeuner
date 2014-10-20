@@ -500,7 +500,6 @@ angular.module('menus').controller('MenusController', [
         }
       } else {
         $scope.menu.$remove(function () {
-          $location.path('menus');
         });
       }
     };
