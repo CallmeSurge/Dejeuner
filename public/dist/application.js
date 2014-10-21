@@ -177,15 +177,20 @@ angular.module('core').controller('HeaderController', [
 angular.module('core').controller('HomeController', [
   '$scope',
   'Authentication',
-  function ($scope, Authentication) {
+  'Fooditems',
+  function ($scope, Authentication, Fooditems) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
     $scope.tab = 1;
     $scope.selectTab = function (setTab) {
       $scope.tab = setTab;
+      $scope.fetchFooditems();
     };
     $scope.isSelected = function () {
       return $scope.tab;
+    };
+    $scope.fetchFooditems = function () {
+      $scope.fooditems = Fooditems.query();
     };
   }
 ]);'use strict';
@@ -375,7 +380,7 @@ angular.module('fooditems').controller('FooditemsController', [
       // Redirect after save
       fooditem.$save(function (response) {
         $scope.show_item_success = true;
-        $scope.find();
+        $scope.fooditems = Fooditems.query();
         // Clear form fields
         $scope.name = '';
         $scope.price = '';
@@ -481,8 +486,8 @@ angular.module('menus').controller('MenusController', [
       var menu = new MenuService({ items: ids });
       // Redirect after save
       menu.$save(function (response) {
-        // $location.path('menus/' + response._id);
         $scope.show_menu_success = true;
+        $scope.updateFoodItem();
         // Clear form fields
         $scope.name = '';
       }, function (errorResponse) {
@@ -500,6 +505,7 @@ angular.module('menus').controller('MenusController', [
         }
       } else {
         $scope.menu.$remove(function () {
+          $location.path('/#!/');
         });
       }
     };
@@ -530,6 +536,9 @@ angular.module('menus').controller('MenusController', [
     $scope.viewOrders = function (menuId) {
       $location.path('menus/' + menuId + '/orders');
     };
+    $scope.updateFoodItem = function () {
+      $scope.fooditems = Fooditems.query();
+    };
     // Find a list of Menus
     $scope.find = function () {
       $scope.menus = MenuService.query();
@@ -541,7 +550,6 @@ angular.module('menus').controller('MenusController', [
     // Find existing Menu
     $scope.findOne = function () {
       $scope.menu = MenuService.get({ menuId: $stateParams.menuId });
-      console.log($scope.menu);
     };
   }
 ]);'use strict';
@@ -596,6 +604,7 @@ angular.module('orders').controller('OrdersController', [
     $scope.myOrder = [];
     $scope.backendOrders = [];
     $scope.orderItems = [];
+    $scope.total = 0;
     // Create new Order
     $scope.create = function () {
       // Create new Order object
@@ -606,9 +615,6 @@ angular.module('orders').controller('OrdersController', [
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
-      console.log($scope.backendOrders);  // for (var i in $scope.backendOrders) {
-                                          // 	$scope.backendOrders.
-                                          // }
     };
     // Remove existing Order
     $scope.remove = function (order) {
@@ -632,10 +638,12 @@ angular.module('orders').controller('OrdersController', [
           item: fooditem._id,
           quantity: fooditem.quantity
         });
+        $scope.total = $scope.total + fooditem.quantity * fooditem.price;
       } else {
         var index = $scope.myOrder.indexOf(fooditem);
         $scope.myOrder.splice(index, 1);
         $scope.backendOrders.splice(index, 1);
+        $scope.total = $scope.total - fooditem.quantity * fooditem.price;
       }
     };
     // Update existing Order
