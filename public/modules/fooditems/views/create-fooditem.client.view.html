@@ -11,7 +11,7 @@
                             <li><input type='button' class='btn btn-primary' value='Update Item' ng-click='update();'>
                         </ul>
                 </div>
-                <p data-ng-show="show_item_success" class="text-danger">Food Item created!</p>       
+                <p data-ng-show="show_item_success" class="text-success">Food Item created!</p>       
 				<p data-ng-show="error" class="text-danger list-group" data-ng-bind="error"></p>
             </fieldset>
         </form>
@@ -23,9 +23,9 @@
                 <ul data-ng-repeat="fooditem in fooditems" data-ng-href="#!/fooditems/{{fooditem._id}}" class="list-group-item navigate">
                     <li><p data-ng-bind="fooditem.name"></p></li>
                     <li><p data-ng-bind="fooditem.price"></p></li>
-                    <li class="editDelete"><a class="glyphicon glyphicon-edit edit btn btn-primary order" data-ng-click="selectForUpdate($index);">
+                    <li class="editDelete"><a class="glyphicon glyphicon-edit edit btn btn-warning" data-ng-click="selectForUpdate($index);">
                     </a>
-                    <a class="glyphicon glyphicon-trash delete btn btn-primary" data-ng-click="remove(fooditem);">
+                    <a class="glyphicon glyphicon-trash btn btn-danger" data-ng-click="remove(fooditem);">
                     </a></li>
                 </ul>
             </div>

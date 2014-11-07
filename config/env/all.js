@@ -6,6 +6,13 @@ module.exports = {
 		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
 		keywords: 'MongoDB, Express, AngularJS, Node.js'
 	},
+	mailer: {
+   		auth: {
+     		user: 'test@example.com',
+     		pass: 'secret',
+   		},
+   		defaultFromAddress: 'First Last <test@examle.com>'
+	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
 	sessionSecret: 'MEAN',

@@ -32,8 +32,8 @@
                     No Menu yet
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary create" data-ng-disabled="!backendOrders.length" data-ng-href="" data-ng-show="authentication.user.roles === 'user' && menu" value="Create Order">
-                    <div data-ng-show="show_order_success" class="text-danger">
+                    <input type="submit" class="btn btn-primary create" data-ng-disabled="orderButton || !backendOrders.length" data-ng-href="" value="Create Order">
+                    <div data-ng-show="show_order_success" class="text-success">
                         <strong> Order created successfully!</strong>
                     </div>
                 </div>

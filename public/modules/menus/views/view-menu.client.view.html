@@ -1,22 +1,16 @@
 <section class= "home" data-ng-controller="MenusController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h4 data-ng-bind="menu.date | date: 'medium'"></h4>
-	</div>
-	<h4>Menu for <span data-ng-bind="menu.date | date: 'EEE'"></span></h4>
-	<a class="btn btn-primary delete  pull-right" data-ng-click="remove();">
-		<i class="glyphicon glyphicon-trash"></i>
-	</a>
-    <div class="foodItem">
-    	<a ng-click="viewOrders(menu._id)" class="btn btn-primary">View Orders</a>
-        <ul data-ng-repeat="item in menu.items" class="list-group-item navigate">
-            <li data-ng-bind="item.name"></li>
-            <li class="price" data-ng-bind="item.price"></li>  
-        </ul>
-    </div>
-	<div class="pull-right" data-ng-hide="authentication.user.roles === 'user'">
-		<!-- <a class="btn btn-primary" href="/#!/menus/{{menu._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a> -->
-		
-	</div>
+			<h4 data-ng-bind="menu.date | date: 'medium'"></h4>
+		</div>
+		<h4>Menu for <span data-ng-bind="menu.date | date: 'EEE'"></span></h4>
+		<a class="btn btn-danger pull-right" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	    <div class="foodItem">
+	    	<a ng-click="viewOrders(menu._id)" class="btn btn-primary">View Orders</a>
+	        <ul data-ng-repeat="item in menu.items" class="list-group-item navigate">
+	            <li data-ng-bind="item.name"></li>
+	            <li class="price" data-ng-bind="item.price"></li>  
+	        </ul>
+	   </div>
 </section>

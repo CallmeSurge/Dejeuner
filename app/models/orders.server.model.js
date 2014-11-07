@@ -24,6 +24,9 @@ var OrderSchema = new Schema({
 			type: Number
 		}
 	}],
+	total: {
+		type: Number
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

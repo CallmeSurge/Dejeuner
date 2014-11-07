@@ -12,10 +12,10 @@ angular.module('menus').controller('MenusController', ['$scope', '$stateParams',
 					return obj._id;
 				});
 			var menu = new MenuService ({
-				items: ids
+				items: ids,
+				date: moment().add(1, 'd').valueOf()
 
 			});
-
 			// Redirect after save
 			menu.$save(function(response) {
 				$scope.show_menu_success = true;

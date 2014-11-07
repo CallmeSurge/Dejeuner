@@ -1,6 +1,11 @@
 <section class="home" data-ng-controller="OrdersController" data-ng-init="findByMenu()">
     <div class="page-header">
         <h4>Today's Orders{{menu.date}}</h4>
+        <ul class = "navigate" style = "float : right; margin-top: -47px;">
+        <li><input type="email" name="email" class="form-control" placeholder="Email" data-ng-model= "recepient"></li>
+        <li><input type="button" class="btn btn-primary order" value="Send" data-ng-click="mailSender()"></li>
+        </ul>
+        <p data-ng-bind="show_mail_success" class="text-success"></p>
     </div>
         <ul data-ng-repeat="order in orders" class="list-group-item navigate">
                 <li><strong>
@@ -10,6 +15,9 @@
                 <li ng-repeat="item in order.items">
                     <span data-ng-bind = "item.item.name" ng-init=""></span>
                     <strong><span data-ng-bind = "item.item.price * item.quantity"></span></strong>
+                </li>
+                <li class="pull-right">
+                    <strong>Total <span data-ng-bind = "order.total"></span></strong>
                 </li>
         </ul>
     <div class="alert alert-warning text-center done" data-ng-hide="!orders.$resolved || orders.length">

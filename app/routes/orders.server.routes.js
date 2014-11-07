@@ -13,6 +13,9 @@ module.exports = function(app) {
 		.get(orders.list)
 		.post(users.requiresLogin, orders.create);
 
+	app.route('/menus/:menuId/send-orders')
+		.post(orders.sendMail);
+
 	app.route('/menus/:menuId/orders/:orderId')
 		.get(orders.read)
 		.put(users.requiresLogin, orders.update)

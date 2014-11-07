@@ -10,9 +10,16 @@ angular.module('orders').factory('Orders', ['$resource',
 			}
 		});
 	}
-]);
-
-angular.module('orders').factory('AllOrders', ['$resource',
+]).factory('SendOrders', ['$resource',
+	function($resource) {
+		return $resource('menus/:menuId/send-orders', { menuId: '@menuId'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]).factory('AllOrders', ['$resource',
 	function($resource) {
 		return $resource('orders/:orderId', { orderId: '@_id'
 		}, {

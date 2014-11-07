@@ -16,8 +16,7 @@ var MenuSchema = new Schema({
 
 	}],
 	date: {
-		type: Date,
-		default: Date.now
+		type: Date
 	}
 
 });
