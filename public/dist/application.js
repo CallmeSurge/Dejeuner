@@ -483,7 +483,10 @@ angular.module('menus').controller('MenusController', [
       var ids = _.map($scope.items, function (obj) {
           return obj._id;
         });
-      var menu = new MenuService({ items: ids });
+      var menu = new MenuService({
+          items: ids,
+          date: moment().add(1, 'd').valueOf()
+        });
       // Redirect after save
       menu.$save(function (response) {
         $scope.show_menu_success = true;
@@ -599,7 +602,8 @@ angular.module('orders').controller('OrdersController', [
   'Orders',
   'AllOrders',
   'MenuService',
-  function ($scope, $stateParams, $location, Authentication, Orders, AllOrders, MenuService) {
+  'SendOrders',
+  function ($scope, $stateParams, $location, Authentication, Orders, AllOrders, MenuService, SendOrders) {
     $scope.authentication = Authentication;
     $scope.myOrder = [];
     $scope.backendOrders = [];
@@ -608,10 +612,14 @@ angular.module('orders').controller('OrdersController', [
     // Create new Order
     $scope.create = function () {
       // Create new Order object
-      var order = new Orders({ items: $scope.backendOrders });
+      var order = new Orders({
+          items: $scope.backendOrders,
+          total: $scope.total
+        });
       // Redirect after save
       order.$save({ menuId: $scope.menu._id }, function (response) {
-        $scope.show_order_success = true;  // Clear form fields
+        $scope.show_order_success = true;
+        $scope.orderButton = true;  // Clear form fields
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
@@ -656,7 +664,7 @@ angular.module('orders').controller('OrdersController', [
       });
     };
     $scope.findCurrentMenu = function () {
-      var now = moment();
+      var now = moment().add(1, 'd');
       var menus = MenuService.query(function (menus) {
           for (var index = 0; index < menus.length; index++) {
             var date = moment(menus[index].date);
@@ -678,6 +686,38 @@ angular.module('orders').controller('OrdersController', [
     $scope.findByMenu = function () {
       $scope.orders = Orders.query({ menuId: $stateParams.menuId });
     };
+    $scope.mailSender = function () {
+      var orders = $scope.orders;
+      var message = '';
+      var content = '';
+      for (var i = 0; i < orders.length; i++) {
+        var name = orders[i].user.displayName;
+        var list = orders[i].items;
+        content += '<p>' + name + '\'s order: <br>';
+        for (var j = 0; j < list.length; j++) {
+          var foodName = list[j].item.name;
+          var foodPrice = list[j].item.price;
+          var quantity = list[j].quantity;
+          var sum = foodPrice * quantity;
+          content += foodName + ' -- ' + sum + '<br>';  // total += sum;
+                                                        // console.log(sum);
+                                                        // console.log(foodName);
+        }
+        content += '</p>';
+        message += content + '<hr>';
+        content = '';
+        var total = 0;
+      }
+      var order = new SendOrders({
+          mail: $scope.recepient,
+          subject: 'Hello, Orders for ' + moment().day(moment().add(1, 'd').day()).format('dddd'),
+          text: message
+        });
+      order.$save({ menuId: $stateParams.menuId }).then(function (data) {
+        $scope.show_mail_success = data.message;
+        $scope.recepient = '';  // Clear form fields
+      });
+    };
   }
 ]);'use strict';
 //Orders service used to communicate Orders REST endpoints
@@ -689,8 +729,12 @@ angular.module('orders').factory('Orders', [
       menuId: '@menuId'
     }, { update: { method: 'PUT' } });
   }
-]);
-angular.module('orders').factory('AllOrders', [
+]).factory('SendOrders', [
+  '$resource',
+  function ($resource) {
+    return $resource('menus/:menuId/send-orders', { menuId: '@menuId' }, { update: { method: 'PUT' } });
+  }
+]).factory('AllOrders', [
   '$resource',
   function ($resource) {
     return $resource('orders/:orderId', { orderId: '@_id' }, { update: { method: 'PUT' } });
