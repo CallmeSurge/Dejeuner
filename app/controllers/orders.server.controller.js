@@ -44,13 +44,13 @@ exports.sendMail = function (req, res){
 	var smtpTransport = nodemailer.createTransport('SMTP',{
 	   	service: 'Gmail',
 	   	auth: {
-	       user: 'bello.a.babajide@gmail.com',
-	       pass: 'babajide90'
+	       user: 'menu.service@andela.co',
+	       pass: 'andela2014'
 	   	}
 	});
 
 		smtpTransport.sendMail({
-	   		from: 'Bello Babajide <bello.babajide@andela.co>', // sender address
+	   		from: 'Menu Service <menu.service@andela.co>', // sender address
 	   		to: '<' + req.body.mail + '>', // comma separated list of receivers
 	   		subject: req.body.subject, // Subject line
 	   		html : req.body.text // plaintext body

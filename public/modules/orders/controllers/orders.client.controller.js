@@ -94,7 +94,6 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 
 		$scope.findByMenu = function() {
 			$scope.orders = Orders.query({menuId: $stateParams.menuId});
-			console.log($scope.orders);
 		};
 
 		$scope.mailSender = function() {
@@ -123,12 +122,13 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 			
 			var order = new SendOrders ({
 				mail : $scope.recepient,
-				subject: 'Hello, Orders for ' + moment().day(moment().day()).format('dddd'),
+				subject: 'Hello, Orders for ' + moment().day(moment().add(1, 'd').day()).format('dddd'),
 				text : message
 			});
 	
 			order.$save({menuId: $stateParams.menuId}).then(function(data) {	
 				$scope.show_mail_success = data.message;
+				$scope.recepient = '';
 
 				// Clear form fields
 			});
