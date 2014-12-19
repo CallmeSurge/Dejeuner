@@ -66,21 +66,26 @@ exports.forgot = function(req, res, next) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
-			var mailOptions = {
-				to: user.email,
-				from: config.mailer.from,
-				subject: 'Password Reset',
-				html: emailHTML
-			};
-			smtpTransport.sendMail(mailOptions, function(err) {
-				if (!err) {
-					res.send({
-						message: 'An email has been sent to ' + user.email + ' with further instructions.'
-					});
-				}
+		var smtpTransport = nodemailer.createTransport('SMTP',{
+			   	service: 'Gmail',
+			   	auth: {
+			       user: 'menu.service@andela.co',
+			       pass: 'andela2014'
+			   	}
+			});
 
-				done(err);
+				smtpTransport.sendMail({
+			   		from: 'Menu Service <menu.service@andela.co>', // sender address
+			   		to: user.email, // comma separated list of receivers
+			   		subject: 'Password Reset', // Subject line
+			   		html : emailHTML// plaintext body
+				}, function(error, response){
+			   	if(!error){
+			   		return res.status(400).send({
+						message: 'An email has been sent to ' + user.email
+					});
+			   	}
+			   	done(error);
 			});
 		}
 	], function(err) {
@@ -169,16 +174,21 @@ exports.reset = function(req, res, next) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
-			var mailOptions = {
-				to: user.email,
-				from: config.mailer.from,
-				subject: 'Your password has been changed',
-				html: emailHTML
-			};
-			
-			smtpTransport.sendMail(mailOptions, function(err) {
-				done(err, 'done');
+		var smtpTransport = nodemailer.createTransport('SMTP',{
+			   	service: 'Gmail',
+			   	auth: {
+			       user: 'menu.service@andela.co',
+			       pass: 'andela2014'
+			   	}
+			});
+
+				smtpTransport.sendMail({
+			   		from: 'Menu Service <menu.service@andela.co>', // sender address
+			   		to: user.email, // comma separated list of receivers
+			   		subject: 'Your Password has been changed', // Subject line
+			   		html : emailHTML// plaintext body
+				}, function(err){
+			   	done(err, 'done');
 			});
 		}
 	], function(err) {

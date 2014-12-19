@@ -11,6 +11,7 @@ module.exports = function(app) {
 	// Article Routes
 	app.route('/menus/:menuId/orders')
 		.get(orders.list)
+		.put(users.requiresLogin, orders.update)
 		.post(users.requiresLogin, orders.create);
 
 	app.route('/menus/:menuId/send-orders')

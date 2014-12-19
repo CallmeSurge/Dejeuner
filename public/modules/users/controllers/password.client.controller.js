@@ -11,6 +11,8 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 		$scope.askForPasswordReset = function() {
 			$scope.success = $scope.error = null;
 
+			console.log($scope.credentials);
+
 			$http.post('/auth/forgot', $scope.credentials).success(function(response) {
 				// Show user success message and clear form
 				$scope.credentials = null;

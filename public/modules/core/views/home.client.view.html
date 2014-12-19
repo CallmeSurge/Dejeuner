@@ -1,4 +1,4 @@
-<div class="space" data-ng-controller="HomeController" data-ng-hide="authentication.user">
+w<div class="space" data-ng-controller="HomeController" data-ng-hide="authentication.user">
 		<h2 class="huge">Hungry?</h2>
 		<h3>There is a huge connection between your stomach and the brain...</h3>
 		<h4>Click here to<a href="/#!/signin"> Send Your Order</a></h4>
@@ -33,20 +33,19 @@
 
 <section data-ng-controller="HomeController" data-ng-show="authentication.user">
 	<div class="row home"  data-ng-show="authentication.user.roles === 'user'">
-<!-- 		<div>
+		<div>
 			<ul class="navigate">
 				<li ng-class="{active:page.isSelected(1)}">
-					<a ng-click="selectTab(1)" class="btn btn-primary btn-lg">Create Order</a>
+					<a ng-click="selectTab(1)" class="btn btn-primary btn-lg">Previous Order</a>
 				</li>
 			    <li ng-class="{active:page.isSelected(2)}">
-					<a ng-click="selectTab(2)" class="btn btn-primary btn-lg">View Previous Orders</a>
+					<a ng-click="selectTab(2)" class="btn btn-primary btn-lg">Create Order</a>
 				</li> 
 			</ul>
-		</div> -->
+		</div>
 		<div>
 			<div ng-show="isSelected() === 1" ng-include="'modules/orders/views/create-order.client.view.html'"></div>
-			<!-- <div ng-show="isSelected() === 2" ng-include="''"></div> -->
+			<div ng-show="isSelected() === 2" ng-include="'modules/orders/views/create-order.client.view.html'"></div>
 		</div>
 	<div>
 </section>
-

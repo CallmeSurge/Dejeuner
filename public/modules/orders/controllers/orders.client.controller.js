@@ -5,15 +5,51 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 	function($scope, $stateParams, $location, Authentication, Orders, AllOrders, MenuService, SendOrders) {
 		$scope.authentication = Authentication;
 		$scope.myOrder = [];
-		$scope.backendOrders = [];
+		$scope.orderBasket = [];
 		$scope.orderItems = [];
 		$scope.total = 0;
+
+
+		$scope.controllerInit = function(){
+			$scope.findCurrentMenu();
+		};
+
+		$scope.getItemInOrder = function(item){
+			for (var i = $scope.myOrder.length - 1; i >= 0; i--) {
+				if( $scope.myOrder[i].item._id === item._id)
+					return $scope.myOrder[i];
+			};
+		}
+
+
+		$scope.filterUserPreviousOrder = function(orders){
+			console.log(orders);
+			for (var i = orders.length - 1; i >= 0; i--) {
+				if (orders[i].user._id === Authentication.user._id) {
+					 $scope.myOrder = orders[i].items;
+					 $scope.total = orders[i].total;
+					 break;
+				}
+			}
+		};
+
+		$scope.getOrders = function(){
+			Orders.query({menuId: $scope.menu._id}, $scope.filterUserPreviousOrder);
+		};
+		
+		$scope.previousOrderContains = function(item){
+			for (var i = $scope.myOrder.length - 1; i >= 0; i--) {
+				if ($scope.myOrder[i].item._id === item._id )
+					return true;
+			}
+			return false;
+		};
 
 		// Create new Order
 		$scope.create = function() {
 			// Create new Order object
 			var order = new Orders ({
-				items : $scope.backendOrders,
+				items : $scope.orderBasket,
 				total : $scope.total
 			});
 		
@@ -43,29 +79,56 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 				});
 			}
 		};
-		$scope.checkedIndex = function($event, fooditem){ 
+		$scope.checkedIndex = function($event, foodItem){ 
 			if ($event.target.checked) { 
-				$scope.myOrder.push(fooditem);
-				$scope.backendOrders.push({item: fooditem._id, quantity: fooditem.quantity});
-				$scope.total = $scope.total + (fooditem.quantity * fooditem.price);
+				$scope.myOrder.push({item:foodItem, quantity:foodItem.quantity});
+				$scope.orderBasket.push({item: foodItem._id, quantity: foodItem.quantity});
+				$scope.computeTotal();
+
 			} else {
-				var index = $scope.myOrder.indexOf(fooditem);
+				var item = $scope.getItemInOrder(foodItem);
+				var index = $scope.myOrder.indexOf(item);
 				$scope.myOrder.splice(index, 1);
-				$scope.backendOrders.splice(index, 1);
-				$scope.total = $scope.total - (fooditem.quantity * fooditem.price);
+				$scope.orderBasket.splice(index, 1);
+				$scope.computeTotal();
 			}
 		};
 
-		// Update existing Order
-		$scope.update = function() {
-			var order = $scope.order ;
 
-			order.$update({menuId: $scope.menu._id}, function() {
-				$location.path('orders/' + order._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+		$scope.updateFoodQuantityChange = function(foodItem){
+			$scope.updateOrderBasketWith(foodItem);
+			$scope.updateMyOrderWith(foodItem);
+			$scope.computeTotal();
 		};
+
+		$scope.updateMyOrderWith = function(foodItem){
+			$scope.getItemInOrder(foodItem);
+		};
+
+		$scope.updateOrderBasketWith = function(foodItem){
+			for (var i = $scope.orderBasket.length - 1; i >= 0; i--) {
+				$scope.orderBasket[i].item === foodItem._id ? $scope.orderBasket[i].quantity = foodItem.quantity : null;
+			}
+		};
+
+		$scope.computeTotal = function(){
+			$scope.total = 0;
+			for (var i = $scope.myOrder.length - 1; i >= 0; i--) {
+				$scope.total += $scope.myOrder[i].item.price * $scope.myOrder[i].quantity;
+			}
+		};
+
+
+		// Update existing Order
+		// $scope.update = function() {
+		// 	var order = $scope.order ;
+
+		// 	order.$update({menuId: $scope.menu._id}, function() {
+		// 		$location.path('orders/' + order._id);
+		// 	}, function(errorResponse) {
+		// 		$scope.error = errorResponse.data.message;
+		// 	});
+		// };
 
 		$scope.findCurrentMenu = function() {
 			var now = moment().add(1, 'd');
@@ -74,6 +137,7 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 					var date = moment(menus[index].date);
 					if(now.isSame(date, 'day')){
 						$scope.menu = menus[index];
+						$scope.getOrders();
 						break;
 					}
 				}
@@ -85,10 +149,16 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 			$scope.orders = AllOrders.query();
 		};
 
-		// Find existing Order
+		// Find existing Order for a particular user
 		$scope.findOne = function() {
-			$scope.order = AllOrders.get({ 
-				orderId: $stateParams.orderId
+			// var now = moment().add(1, 'd');
+			// var order = Order.query(function(order){
+			// 	for (var i = 0; i < order.length; i++) {
+			// 	 // var date = moment(order[i].date)
+			// 	};
+			// })
+			$scope.order = Orders.query({ 
+				userId: $stateParams.userId
 			});
 		};
 
@@ -110,9 +180,6 @@ angular.module('orders').controller('OrdersController', ['$scope', '$stateParams
 						var quantity = list[j].quantity;
 						var sum = foodPrice * quantity;
 						content += foodName + ' -- ' + sum + '<br>';  
-						// total += sum;
-						// console.log(sum);
-						// console.log(foodName);
 				}
 				content += '</p>';
 				message += content + '<hr>';

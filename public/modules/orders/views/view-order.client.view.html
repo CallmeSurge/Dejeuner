@@ -1,15 +1,18 @@
-<section class="home" data-ng-controller="OrdersController" data-ng-init="findOne()">
+<section data-ng-controller="OrdersController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="order.name"></h1>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == order.user._id">
+	<!-- <div data-ng-show="authentication.user._id == order.user._id">
 		<a class="btn btn-primary" href="/#!/orders/{{order._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 		<a class="btn btn-primary" data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
-	</div>
+	</div> -->
+	<div class="alert alert-warning text-center done">
+                    No Order yet
+   	</div>
 	<small>
 		<em class="text-muted">
 			Posted on
